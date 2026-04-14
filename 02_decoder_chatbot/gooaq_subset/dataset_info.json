@@ -1,0 +1,42 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "gooaq-subset",
+  "dataset_size": 203158684,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/odinhg/gooaq-subset@5327619573d0eccf80706ca4bcfc5dc059c798e6/data/train-00000-of-00001.parquet": {
+      "num_bytes": 138118472,
+      "checksum": null
+    }
+  },
+  "download_size": 138118472,
+  "features": {
+    "question": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "answer": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 341277156,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 203158684,
+      "num_examples": 859765,
+      "dataset_name": "gooaq-subset"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
