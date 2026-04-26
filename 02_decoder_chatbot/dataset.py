@@ -28,11 +28,23 @@ class QADataset(Dataset):
         question, answer = self.dataset[idx]["question"], self.dataset[idx]["answer"]
 
         # TODO: Implement this method
+        qestion_tokens = self.tokenizer.encode(question).ids
+        answer_tokens = self.tokenizer.encode(answer).ids
+        
+        full_sequence = qestion_tokens + [self.sep_id] + answer_tokens + [self.end_id]
+        full_sequence = full_sequence + [self.pad_id] * (self.max_length + 1)
+        full_sequence = full_sequence[:self.max_length + 1]
+
+        source_sequence = torch.tensor(full_sequence[:self.max_length])
+        target_sequence = torch.tensor(full_sequence[1:])
+        target_sequence[target_sequence == self.pad_id] = -100
+
+        key_padding_mask = (source_sequence == self.pad_id)
 
         return {
-            "source_sequence": ..., 
-            "target_sequence": ...,
-            "key_padding_mask": ...,
+            "source_sequence": source_sequence, 
+            "target_sequence": target_sequence,
+            "key_padding_mask": key_padding_mask,
         }
 
 
