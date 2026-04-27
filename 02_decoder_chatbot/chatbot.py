@@ -1,3 +1,5 @@
+from xml.parsers.expat import model
+
 import torch
 import streamlit as st
 from tokenizers import Tokenizer
@@ -13,7 +15,9 @@ torch.classes.__path__ = []
 def load_model(config):
     model = TransformerModel(config)
     model = model.to(config.device)
-    model.load_state_dict(torch.load(config.model_filename, weights_only=True, map_location=config.device))
+    state_dict = torch.load(config.model_filename, weights_only=True, map_location=config.device)
+    new_state_dict = {k.replace("_orig_mod.", ""): v for k, v in state_dict.items()}
+    model.load_state_dict(new_state_dict)
     return model
 
 @st.cache_resource
