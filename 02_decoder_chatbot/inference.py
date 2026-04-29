@@ -65,6 +65,7 @@ if __name__ == "__main__":
     from config import config
     from tokenizers import Tokenizer
     from model import TransformerModel
+    from itertools import product
 
     model = TransformerModel(config)
     model = model.to(config.device)
@@ -92,4 +93,12 @@ if __name__ == "__main__":
     print(f"Question: {question_text}")
     print(f"Answer: {answer_text}")
 
-
+    # Experimenting with different sampling parameters to see the effect on the generated answer.
+    ps = [0.1, 0.3, 0.5, 0.7, 0.9, 1.0]
+    temps = [0.1, 0.3, 0.5, 0.7, 1.0, 1.5, 2.0]
+    for p, temp in product(ps, temps):
+        print(f"Top-p sampling (p={p}, temperature={temp}):")
+        answer = sample_sequence(input_sequence, model, "top-p", 100, config.device, end_id, p=p, temperature=temp)
+        answer_text = decode_output(tokenizer, answer)
+        print(f"Question: {question_text}")
+        print(f"Answer: {answer_text}")
